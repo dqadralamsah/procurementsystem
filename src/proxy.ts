@@ -5,12 +5,14 @@ export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const session = await auth();
 
-  const publicPath = ['/signin', 'unauthorized', 'forbidden'];
-  const isPublic = publicPath.includes(pathname);
+  const publicPath = ['/signin', '/unauthorized', '/forbidden'];
+  const isPublic = publicPath.some((path) => pathname === path);
 
   // if the user is not logged in and is trying to access a non-public route, redirect to login page
   if (!session && !isPublic) {
-    return NextResponse.redirect(new URL('/signin', req.url));
+    const signInUrl = new URL('/signin', req.url);
+    signInUrl.searchParams.set('callbackUrl', pathname);
+    return NextResponse.redirect(signInUrl);
   }
 
   // if the user is logged and is triying to access a public route, redirect to dashboard
