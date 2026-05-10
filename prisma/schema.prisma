@@ -20,22 +20,139 @@ model Role {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  users     User[]
+  users User[]
 
   @@map("roles")
 }
 
 model User {
-  id        String   @id @default(uuid()) @db.Uuid
-  email     String   @unique
-  password  String
-  name      String
-  roleId    String   @map("role_id") @db.Uuid
-  role      Role     @relation(fields: [roleId], references: [id])
+  id       String @id @default(uuid()) @db.Uuid
+  email    String @unique
+  password String
+  name     String
+  roleId   String @map("role_id") @db.Uuid
+  role     Role   @relation(fields: [roleId], references: [id])
+
   isActive  Boolean  @default(true) @map("is_active")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("users")
   @@index([roleId])
+  @@map("users")
+}
+
+// Master Data
+model Warehouse {
+  id            String  @id @default(uuid()) @db.Uuid
+  warehouseCode String  @unique @map("warehouse_code")
+  name          String
+  address       String
+  description   String?
+  isActive      Boolean @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("warehouse")
+}
+
+model Supplier {
+  id           String  @id @default(uuid()) @db.Uuid
+  supplierCode String  @unique @map("supplier_code")
+  name         String
+  address      String?
+  email        String?
+  contact      String?
+  isActive     Boolean @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  supplierPrices SupplierPrices[]
+
+  @@map("supplier")
+}
+
+model UomCategory {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  uoms Uom[]
+
+  @@map("uom_categories")
+}
+
+model Uom {
+  id          String      @id @default(uuid()) @db.Uuid
+  name        String
+  categoryId  String      @map("category_id") @db.Uuid
+  category    UomCategory @relation(fields: [categoryId], references: [id])
+  description String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  items          Item[]
+  supplierPrices SupplierPrices[]
+
+  @@index([categoryId])
+  @@map("uoms")
+}
+
+model ItemCategory {
+  id          String  @id @default(uuid()) @db.Uuid
+  name        String  @unique
+  description String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  items Item[]
+
+  @@map("item_categories")
+}
+
+model Item {
+  id           String       @id @default(uuid()) @db.Uuid
+  sku          String       @unique @map("sku")
+  name         String
+  description  String?
+  categoryId   String       @map("category_id") @db.Uuid
+  category     ItemCategory @relation(fields: [categoryId], references: [id])
+  uomId        String       @map("uom_id") @db.Uuid
+  uom          Uom          @relation(fields: [uomId], references: [id])
+  reorderPoint Decimal      @default(0) @map("reorder_point") @db.Decimal(18, 4)
+  minimumStock Decimal      @default(0) @map("minimum_stock") @db.Decimal(18, 4)
+  isActive     Boolean      @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  supplierPrices SupplierPrices[]
+
+  @@index([sku, categoryId, uomId])
+  @@map("items")
+}
+
+model SupplierPrices {
+  id               String   @id @default(uuid()) @db.Uuid
+  supplierId       String   @map("suppier_id") @db.Uuid
+  supplier         Supplier @relation(fields: [supplierId], references: [id])
+  itemId           String   @map("item_id") @db.Uuid
+  item             Item     @relation(fields: [itemId], references: [id])
+  price            Decimal  @default(0) @db.Decimal(18, 4)
+  uomId            String   @map("uom_id") @db.Uuid
+  uom              Uom      @relation(fields: [uomId], references: [id])
+  conversionRation Decimal  @map("conversion_ratio") @db.Decimal(18, 4)
+  minimumOrder     Decimal  @map("minimum_order") @db.Decimal(18, 4)
+  effectiveDate    DateTime @map("effective_date")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([supplierId, itemId, effectiveDate])
+  @@index([supplierId, itemId])
+  @@map("supplier_prices")
 }

@@ -26,12 +26,12 @@ type items = {
   }[];
 };
 
-export default function NavReport({ items }: { items: items[] }) {
+export default function SecondMenu({ items }: { items: items[] }) {
   const pathname = usePathname();
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Reports</SidebarGroupLabel>
+      <SidebarGroupLabel>Reports & Settings</SidebarGroupLabel>
       <SidebarMenu className="gap-2">
         {items.map((item) => {
           const isSubItemActive = item.items?.some((sub) => pathname === sub.url);
