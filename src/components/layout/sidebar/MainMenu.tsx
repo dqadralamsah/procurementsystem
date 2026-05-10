@@ -12,7 +12,7 @@ type items = {
   isActive?: boolean;
 };
 
-export default function NavMenu({ items }: { items: items[] }) {
+export default function MainMenu({ items }: { items: items[] }) {
   const pathname = usePathname();
 
   return (
