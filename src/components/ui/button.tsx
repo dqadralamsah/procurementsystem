@@ -23,7 +23,7 @@ const buttonVariants = cva(
       size: {
         default:
           'h-8 gap-1.5 px-2.5 text-base has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2',
-        xs: "h-6 gap-1 px-2 text-xs rounded-[min(var(--radius-md),10px)] has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+        xs: "h-6 gap-1 px-2 text-xs font-bold rounded-[min(var(--radius-md),10px)] has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm: "h-7 gap-1 px-2.5 rounded-[min(var(--radius-md),12px)] has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
         lg: 'h-9 gap-1.5 px-2.5 text-xs/relaxed has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 ',
         icon: 'size-8',
@@ -53,7 +53,7 @@ function Button({
 
   return (
     <Comp
-      data-slot="button"
+      data-slot='button'
       data-variant={variant}
       data-size={size}
       className={cn(buttonVariants({ variant, size, className }))}

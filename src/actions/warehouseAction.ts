@@ -1,37 +1,29 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { warehouseSchema, WarehouseValues } from '@/schemas/warehouse.schema';
 import { warehouseService } from '@/services/warehouse.service';
 
-export async function handleWarehouseSubmit(formData: FormData) {
-  const id = formData.get('id') as string | null;
-
-  const name = formData.get('name') as string;
-  const address = formData.get('address') as string;
-  const description = (formData.get('description') as string) || undefined;
-
+// Handle Submit
+export async function handleWarehouseSubmit(
+  id: string | null,
+  data: WarehouseValues,
+) {
   try {
-    if (id) {
-      const isActive = formData.get('isActive') === 'true';
+    const validated = warehouseSchema.parse(data);
 
-      await warehouseService.update(id, {
-        name,
-        address,
-        description,
-        isActive,
-      });
+    if (id && validated) {
+      await warehouseService.update(id, validated);
     } else {
-      await warehouseService.create({
-        name,
-        address,
-        description,
-      });
+      await warehouseService.create(validated);
     }
 
-    revalidatePath('/warehouse');
-    return { success: true };
+    revalidatePath('/settings/warehouse');
+    return { success: true, message: id ? 'Updated Data!' : 'Created Data!' };
   } catch (error) {
-    console.error('Action Error:', error);
+    console.error('Submit Error:', error);
     return { success: false, message: 'System error' };
   }
 }
+
+// Hanlde Delete

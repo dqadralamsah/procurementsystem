@@ -1,7 +1,9 @@
 import prisma from '@/lib/prisma';
+import { WarehouseValues } from '@/schemas/warehouse.schema';
 import { codeGenerator } from '@/utils/codeGenerator';
 
 export const warehouseService = {
+  // GET All
   async getAll() {
     return await prisma.warehouse.findMany({
       orderBy: {
@@ -10,25 +12,23 @@ export const warehouseService = {
     });
   },
 
+  // GET By ID
   async getById(id: string) {
     return await prisma.warehouse.findUnique({
       where: { id },
     });
   },
 
-  async create(data: { name: string; address: string; description?: string }) {
+  // CREATE
+  async create(data: WarehouseValues) {
     const lastEntry = await prisma.warehouse.findFirst({
       where: {
         warehouseCode: {
-          startsWith: 'WRHAS-',
+          startsWith: 'WRHS-',
         },
       },
-      orderBy: {
-        warehouseCode: 'desc',
-      },
-      select: {
-        warehouseCode: true,
-      },
+      orderBy: { warehouseCode: 'desc' },
+      select: { warehouseCode: true },
     });
 
     const warehouseCode = codeGenerator({
@@ -46,10 +46,8 @@ export const warehouseService = {
     });
   },
 
-  async update(
-    id: string,
-    data: { name?: string; address?: string; description?: string | null; isActive: boolean },
-  ) {
+  // UPDATE
+  async update(id: string, data: WarehouseValues) {
     return await prisma.warehouse.update({
       where: { id },
       data,
