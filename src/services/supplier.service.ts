@@ -1,36 +1,34 @@
-import prisma from '@/lib/prisma';
-import { codeGenerator } from '@/utils/codeGenerator';
+import prisma from "@/lib/prisma";
+import { codeGenerator } from "@/utils/codeGenerator";
+import { SupplierValues } from "@/schemas/supplier.schema";
 
 export const supplierService = {
+  // GET All
   async getAll() {
     return await prisma.supplier.findMany({
       orderBy: {
-        createdAt: 'desc',
+        createdAt: "asc",
       },
     });
   },
 
+  // GET By ID
   async getById(id: string) {
     return await prisma.supplier.findUnique({
       where: { id },
     });
   },
 
-  async create(data: {
-    name: string;
-    email?: string | null;
-    phone?: string | null;
-    address?: string | null;
-    contactPerson?: string | null;
-  }) {
+  // CREATE
+  async create(data: SupplierValues) {
     const lastEntry = await prisma.supplier.findFirst({
       where: {
         supplierCode: {
-          startsWith: 'SPPLR-',
+          startsWith: "SPPLR-",
         },
       },
       orderBy: {
-        supplierCode: 'desc',
+        supplierCode: "desc",
       },
       select: {
         supplierCode: true,
@@ -38,7 +36,7 @@ export const supplierService = {
     });
 
     const supplierCode = codeGenerator({
-      prefix: 'SPPLR',
+      prefix: "SPPLR",
       digits: 3,
       lastEntry: lastEntry?.supplierCode,
     });
@@ -52,17 +50,8 @@ export const supplierService = {
     });
   },
 
-  async update(
-    id: string,
-    data: {
-      name: string;
-      email?: string | null;
-      phone?: string | null;
-      address?: string | null;
-      contactPerson?: string | null;
-      isActive: boolean;
-    },
-  ) {
+  // UPDATE
+  async update(id: string, data: SupplierValues) {
     return await prisma.supplier.update({
       where: { id },
       data,

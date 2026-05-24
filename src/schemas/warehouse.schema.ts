@@ -5,8 +5,8 @@ export const warehouseSchema = z.object({
   address: z.string().min(5, { message: 'Address Required' }),
   description: z
     .string()
-    .transform((val) => (val === '' ? null : val))
     .optional()
+    .transform((val) => (val === '' ? null : val))
     .nullable(),
   isActive: z.boolean().default(true),
 });

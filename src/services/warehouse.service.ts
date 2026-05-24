@@ -7,7 +7,7 @@ export const warehouseService = {
   async getAll() {
     return await prisma.warehouse.findMany({
       orderBy: {
-        createdAt: 'desc',
+        warehouseCode: 'asc',
       },
     });
   },

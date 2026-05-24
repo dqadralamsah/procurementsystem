@@ -6,20 +6,20 @@ export default async function Page() {
   const warehouses = await warehouseService.getAll();
 
   return (
-    <main className='space-y-4'>
+    <div className="space-y-4">
       <div>
-        <h1 className='text-2xl font-bold'>Warehouse</h1>
-        <p className='text-sm text-gray-400'>Kelola Warehouse Di sini</p>
+        <h1 className="text-2xl font-bold">Warehouse Management</h1>
+        <p className="text-sm text-gray-400">Kelola Master Data Warehouse</p>
       </div>
 
-      <div className='space-y-2'>
-        <div className='flex items-center justify-end'>
+      <div className="space-y-2">
+        <div className="flex items-center justify-end">
           <WarehouseCreateButton />
         </div>
-        <div className=''>
+        <div>
           <WarehouseTable data={warehouses} />
         </div>
       </div>
-    </main>
+    </div>
   );
 }
