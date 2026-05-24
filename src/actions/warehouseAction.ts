@@ -5,10 +5,7 @@ import { warehouseSchema, WarehouseValues } from '@/schemas/warehouse.schema';
 import { warehouseService } from '@/services/warehouse.service';
 
 // Handle Submit
-export async function handleWarehouseSubmit(
-  id: string | null,
-  data: WarehouseValues,
-) {
+export async function handleWarehouseSubmit(id: string | null, data: WarehouseValues) {
   try {
     const validated = warehouseSchema.parse(data);
 
@@ -19,10 +16,13 @@ export async function handleWarehouseSubmit(
     }
 
     revalidatePath('/settings/warehouse');
-    return { success: true, message: id ? 'Updated Data!' : 'Created Data!' };
+    return {
+      success: true,
+      message: id ? 'Warehouse updated successfully!' : 'Warehouse created successfully!',
+    };
   } catch (error) {
-    console.error('Submit Error:', error);
-    return { success: false, message: 'System error' };
+    console.error('Action Error:', error);
+    return { success: false, message: 'System Error' };
   }
 }
 
