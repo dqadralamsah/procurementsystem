@@ -16,6 +16,14 @@ export const warehouseService = {
   async getById(id: string) {
     return await prisma.warehouse.findUnique({
       where: { id },
+      include: {
+        _count: {
+          select: { inventories: true },
+        },
+        inventories: {
+          include: { item: true },
+        },
+      },
     });
   },
 
