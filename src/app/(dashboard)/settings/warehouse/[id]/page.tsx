@@ -1,8 +1,6 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { warehouseService } from '@/services/warehouse.service';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft } from 'lucide-react';
 import WarehouseDetailView from '@/features/master-data/warehouse/WarehouseDetail';
 
 interface PageProps {
@@ -16,20 +14,12 @@ export default async function Page({ params }: PageProps) {
   const data = await warehouseService.getById(id);
 
   return (
-    <div className='flex flex-col gap-6 p-6'>
+    <div className='space-y-4'>
       {/* Breadcrumb / Back Button */}
       <div className='flex items-center gap-4'>
-        <Button variant='outline' size='icon' asChild>
-          <Link href='/warehouses'>
-            <ChevronLeft className='w-4 h-4' />
-          </Link>
+        <Button size={'sm'} variant='outline' asChild className='shadow-sm'>
+          <Link href='/settings/warehouse'>Back to List</Link>
         </Button>
-        <div>
-          <h1 className='text-2xl font-bold tracking-tight'>{data?.name}</h1>
-          <p className='text-sm text-muted-foreground'>
-            Manage warehouse information and stock levels
-          </p>
-        </div>
       </div>
 
       {/* Main View */}
