@@ -1,54 +1,78 @@
+'use client';
+
+import { useState } from 'react';
 import { WarehouseType } from '@/types/warehouse';
-import { MapPin, AlignLeft } from 'lucide-react';
+import { MapPin, AlignLeft, SquarePen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import WarehouseForm from './WarehouseForm';
 
 export function WarehouseDetailCard({ data }: { data: WarehouseType }) {
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
   return (
-    <div className='w-full p-4 border rounded-lg shadow-sm overflow-hidden'>
+    <div className='w-full p-6 border rounded-xl bg-card shadow-sm relative overflow-hidden transition-all duration-300 hover:shadow-md'>
       {/* Header Panel */}
-      <div className='flex items-start justify-between py-2 border-b border-gray-200'>
-        <div>
-          <h1 className='text-xl md:text-2xl font-bold'>{data.name}</h1>
-          <p className='text-xs md:text-sm text-gray-400'>
-            Warehouse Number: {data.warehouseCode}
+      <div className='flex flex-col sm:flex-row sm:items-center justify-between pb-4 gap-4 border-b border-gray-100 dark:border-gray-800'>
+        <div className='space-y-1'>
+          <h1 className='text-2xl font-bold tracking-tight text-foreground'>{data.name}</h1>
+          <p className='text-sm text-muted-foreground font-mono'>
+            Warehouse Code: {data.warehouseCode}
           </p>
         </div>
-        <span
-          className={`px-4 py-1 rounded-full text-sm font-semibold ${
-            data.isActive
-              ? 'bg-green-100 border border-green-300 text-green-700'
-              : 'bg-red-100 border border-red-300 text-red-700'
-          }`}
-        >
-          {data.isActive ? 'Active' : 'Inactive'}
-        </span>
+        <div className='flex items-center gap-3 self-end sm:self-auto'>
+          <span
+            className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wide ${
+              data.isActive
+                ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-600'
+                : 'bg-destructive/10 border border-destructive/20 text-destructive'
+            }`}
+          >
+            {data.isActive ? 'Active' : 'Inactive'}
+          </span>
+          <Button
+            onClick={() => setIsEditOpen(true)}
+            variant='outline'
+            size='sm'
+            className='gap-2 shadow-sm border-gray-300 dark:border-gray-700'
+          >
+            <SquarePen size={14} className='text-blue-500' />
+            Edit Detail
+          </Button>
+        </div>
       </div>
 
       {/* Konten Informasi Utama */}
-      <div className='py-2'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 pt-6'>
         {/* Alamat */}
         <div className='flex items-start gap-4'>
-          <div className='p-1 rounded bg-gray-100'>
-            <MapPin size={16} className='text-gray-500' />
+          <div className='p-2.5 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800'>
+            <MapPin size={18} className='text-blue-500' />
           </div>
-          <div>
-            <p className='font-semibold text-gray-900'>Address</p>
-            <p className='text-gray-600 leading-relaxed'>{data.address}</p>
+          <div className='space-y-1'>
+            <p className='text-sm font-semibold text-foreground'>Address</p>
+            <p className='text-sm text-muted-foreground leading-relaxed'>{data.address}</p>
           </div>
         </div>
 
         {/* Deskripsi */}
         <div className='flex items-start gap-4'>
-          <div className='p-1 rounded bg-gray-100'>
-            <AlignLeft size={16} className='text-gray-500' />
+          <div className='p-2.5 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800'>
+            <AlignLeft size={18} className='text-blue-500' />
           </div>
-          <div>
-            <p className='font-semibold text-gray-900'>Description</p>
-            <p className='text-gray-600 italic'>
+          <div className='space-y-1'>
+            <p className='text-sm font-semibold text-foreground'>Description</p>
+            <p className='text-sm text-muted-foreground italic leading-relaxed'>
               {data.description || 'No description provided.'}
             </p>
           </div>
         </div>
       </div>
+
+      <WarehouseForm
+        isOpen={isEditOpen}
+        onOpenChange={setIsEditOpen}
+        initialData={data}
+      />
     </div>
   );
 }

@@ -11,6 +11,7 @@ export async function handleWarehouseSubmit(id: string | null, data: WarehouseVa
 
     if (id && validated) {
       await warehouseService.update(id, validated);
+      revalidatePath(`/settings/warehouse/${id}`);
     } else {
       await warehouseService.create(validated);
     }
@@ -25,5 +26,3 @@ export async function handleWarehouseSubmit(id: string | null, data: WarehouseVa
     return { success: false, message: 'System Error' };
   }
 }
-
-// Hanlde Delete
