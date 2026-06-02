@@ -17,13 +17,3 @@ export type InventoryType = {
     };
   };
 };
-
-export type PaginatedInventoryResponse = {
-  data: InventoryType[];
-  meta: {
-    page: number;
-    total: number;
-    take: number;
-    totalPages: number;
-  };
-};

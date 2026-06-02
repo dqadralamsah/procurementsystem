@@ -1,45 +1,32 @@
 import prisma from '@/lib/prisma';
-import { getPagination } from '@/utils/pagination';
-import { PaginatedInventoryResponse } from '@/types/inventory';
 import { Prisma } from '@/generated/prisma/client';
+import { PaginationResponse } from '@/lib/type';
+import { InventoryType } from '@/types/inventory';
+import { getPagination } from '@/utils/pagination';
+import { buildSearchWhere } from '@/utils/search';
 
+// ========== INVENTORY SERVICE ==========
 export const inventoryService = {
+  // GET All
+
+  // GET By ID
+
   // GET Paginated & Filtered Inventories for a Warehouse
-  async getInventoriesByWarehouseId(
+  async getByWarehouseId(
     warehouseId: string,
     search?: string,
     page: number = 1,
     limit: number = 10,
-  ): Promise<PaginatedInventoryResponse> {
+  ): Promise<PaginationResponse<InventoryType>> {
     const safePage = Math.max(1, page);
     const safeLimit = Math.max(1, Math.min(limit, 100));
 
     const { skip, take } = getPagination(safePage, safeLimit);
+    const itemSearch = buildSearchWhere(search, ['name', 'sku']);
 
     const where: Prisma.InventoryWhereInput = {
       warehouseId,
-      ...(search
-        ? {
-            OR: [
-              {
-                item: {
-                  name: {
-                    contains: search,
-                    mode: 'insensitive',
-                  },
-                },
-              },
-              {
-                item: {
-                  sku: {
-                    contains: search,
-                    mode: 'insensitive',
-                  },
-                },
-              },
-            ],
-          }
-        : {}),
+      item: search ? itemSearch : undefined,
     };
 
     const [inventories, total] = await Promise.all([
@@ -63,7 +50,6 @@ export const inventoryService = {
       prisma.inventory.count({ where }),
     ]);
 
-    // Serialize Decimal types to number for the client
     const serializedData = inventories.map((inv) => ({
       ...inv,
       quantity: Number(inv.quantity),
