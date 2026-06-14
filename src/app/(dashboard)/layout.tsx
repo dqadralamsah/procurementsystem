@@ -15,15 +15,15 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <TooltipProvider>
           <AppSidebar role={role} />
         </TooltipProvider>
-        <SidebarInset>
-          <header className="flex items-center h-16">
-            <div className="flex items-center h-4 gap-2 px-4">
+        <SidebarInset className="bg-slate-50">
+          <header className="flex items-center h-16 bg-white border-b border-sidebar-border">
+            <div className="flex items-center h-4 gap-2 px-4 ">
               <SidebarTrigger size={'icon-lg'} />
               <Separator orientation="vertical" className="mr-2" />
               <DynamicBreadcrumbs />
             </div>
           </header>
-          <main className="px-4">{children}</main>
+          <main className="w-full max-w-350 h-dvh p-4 mx-auto">{children}</main>
         </SidebarInset>
       </SidebarProvider>
     </BreadcrumbProvider>

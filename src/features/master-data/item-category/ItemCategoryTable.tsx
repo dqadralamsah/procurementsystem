@@ -18,43 +18,52 @@ export default function ItemCategoryTable({ data }: { data: ItemCategoryType[] }
   };
 
   return (
-    <div className="border rounded-lg overflow-hidden">
-      <table className="w-full text-sm text-left">
+    <div className="w-full overflow-x-auto">
+      <table className="w-full min-w-[400px] border-collapse text-left">
         <thead>
-          <tr className="border-b bg-muted/50">
-            <th className="px-3 py-2 font-medium">Name</th>
-            <th className="px-3 py-2 font-medium">Description</th>
-            <th className="px-3 py-2 text-center font-medium">Action</th>
+          <tr className="bg-slate-50/75 border-b border-slate-200/80 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <th className="p-3 w-64">Name</th>
+            <th className="p-3">Description</th>
+            <th className="p-3 w-28 text-center">Actions</th>
           </tr>
         </thead>
-        <tbody>
-          {data.map((cat) => (
-            <tr key={cat.id} className="border-b">
-              <td className="px-3 py-2">{cat.name}</td>
-              <td className="px-3 py-2">{cat.description}</td>
-              <td className="flex items-center justify-center gap-2">
-                <Button
-                  onClick={() => {
-                    setSelectCategory(cat);
-                    setIsEditOpen(true);
-                  }}
-                  variant={'ghost'}
-                  size={'icon'}
-                >
-                  <SquarePen className="text-blue-400" />
-                </Button>
-                <Button onClick={() => handleDelete(cat.id)} variant={'ghost'} size={'icon'}>
-                  <Trash className="text-blue-400" />
-                </Button>
-              </td>
-            </tr>
-          ))}
-          {data.length === 0 && (
+        <tbody className="divide-y divide-slate-100 text-sm">
+          {data.length === 0 ? (
             <tr>
-              <td colSpan={3} className="px-3 py-2 text-center text-gray-500">
-                No data available
+              <td colSpan={3} className="p-3 text-center text-slate-400 font-medium border-b border-slate-100">
+                No categories found.
               </td>
             </tr>
+          ) : (
+            data.map((cat) => (
+              <tr key={cat.id} className="hover:bg-slate-50/50 transition-colors">
+                <td className="p-3 font-semibold text-slate-800">{cat.name}</td>
+                <td className="p-3 text-slate-600">{cat.description || '-'}</td>
+                <td className="p-3">
+                  <div className="flex items-center justify-center gap-1.5">
+                    <Button
+                      onClick={() => {
+                        setSelectCategory(cat);
+                        setIsEditOpen(true);
+                      }}
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-slate-500 hover:text-amber-600 hover:bg-amber-50/50 rounded-lg transition-colors"
+                    >
+                      <SquarePen className="size-4" />
+                    </Button>
+                    <Button 
+                      onClick={() => handleDelete(cat.id)} 
+                      variant="ghost" 
+                      size="icon"
+                      className="h-8 w-8 text-slate-500 hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-colors"
+                    >
+                      <Trash className="size-4" />
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))
           )}
         </tbody>
       </table>

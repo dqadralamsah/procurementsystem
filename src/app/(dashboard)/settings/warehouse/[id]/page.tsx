@@ -30,7 +30,7 @@ export default async function Page({ params, searchParams }: PageProps) {
     notFound();
   }
 
-  const { data: inventories, meta } = await inventoryService.getInventoriesByWarehouseId(
+  const { data: inventories, meta } = await inventoryService.getByWarehouseId(
     id,
     search,
     page,
@@ -42,7 +42,7 @@ export default async function Page({ params, searchParams }: PageProps) {
       <SetBreadcrumb id={id} label={warehouse.warehouseCode} />
       {/* Breadcrumb / Back Button */}
       <div className="flex items-center gap-4">
-        <Button size="sm" variant="outline" asChild className="shadow-sm">
+        <Button size="xs" asChild>
           <Link href="/settings/warehouse">Back to List</Link>
         </Button>
       </div>

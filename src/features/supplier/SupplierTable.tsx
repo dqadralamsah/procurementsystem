@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { SupplierType } from '@/types/supplier';
-import { SquarePen, Eye, Trash } from 'lucide-react';
+import { SquarePen, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SupplierForm from './SupplierForm';
 
@@ -17,62 +17,61 @@ export default function SupplierTable({ data }: Props) {
   );
 
   return (
-    <div className='border rounded-lg overflow-hidden'>
-      <table className='w-full text-left'>
+    <>
+      <table className="w-full min-w-[600px] border-collapse text-left">
         <thead>
-          <tr className='h-12 text-xs font-bold text-gray-400 bg-muted'>
-            <th className='w-60 p-3'>Supplier Number</th>
-            <th className='p-3'>Supplier Name</th>
-            <th className='w-32 p-3 text-center'>Status</th>
-            <th className='w-32 p-3 text-center'>Action</th>
+          <tr className="bg-slate-50/75 border-b border-slate-200/80 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <th className="p-3 w-48">Supplier Number</th>
+            <th className="p-3">Supplier Name</th>
+            <th className="p-3 w-32 text-center">Status</th>
+            <th className="p-3 w-28 text-center">Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-slate-100 text-sm">
           {data.map((sup) => (
-            <tr
-              key={sup.id}
-              className='h-12 text-xs border-t hover:bg-indigo-50/30 even:bg-muted/20 transition-colors'
-            >
-              <td className='p-3 font-mono'>{sup.supplierCode}</td>
-              <td className='p-3 font-medium'>{sup.name}</td>
-              <td className='p-3 text-center'>
-                <span
-                  className={`px-4 py-1 text-[10px] font-bold rounded-full ${
-                    sup.isActive
-                      ? 'bg-green-100 border border-green-300 text-green-700 '
-                      : 'bg-red-100 border border-red-300 text-red-700'
-                  }`}
-                >
-                  {sup.isActive ? 'Active' : 'Inactive'}
-                </span>
+            <tr key={sup.id} className="hover:bg-slate-50/50 transition-colors">
+              <td className="p-3 font-medium text-slate-800">{sup.supplierCode}</td>
+              <td className="p-3 text-slate-700">{sup.name}</td>
+              <td className="p-3">
+                <div className="flex justify-center">
+                  <span
+                    className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium border ${
+                      sup.isActive
+                        ? 'bg-green-50 text-green-700 border-green-200'
+                        : 'bg-red-50 text-red-700 border-red-200'
+                    }`}
+                  >
+                    {sup.isActive ? 'Active' : 'Inactive'}
+                  </span>
+                </div>
               </td>
-              <td className='flex items-center justify-center p-1.5 gap-1'>
-                {/* Handle Detail belum berfungsi */}
-                {/* Handle Detail */}
-                <Button variant='ghost' size='icon'>
-                  <Eye className='text-gray-500' />
-                </Button>
-
-                {/* Handle Edit */}
-                <Button
-                  onClick={() => {
-                    setSelectedSupplier(sup);
-                    setIsEditOpen(true);
-                  }}
-                  variant='ghost'
-                  size='icon'
-                >
-                  <SquarePen className='text-blue-500' />
-                </Button>
+              <td className="p-3">
+                <div className="flex items-center justify-center gap-1.5">
+                  <Button
+                    onClick={() => {
+                      setSelectedSupplier(sup);
+                      setIsEditOpen(true);
+                    }}
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-slate-500 hover:text-amber-600 hover:bg-amber-50/50 rounded-lg transition-colors"
+                  >
+                    <SquarePen className="size-4" />
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className="h-8 w-8 text-slate-500 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-colors"
+                  >
+                    <Eye className="size-4" />
+                  </Button>
+                </div>
               </td>
             </tr>
           ))}
           {data.length === 0 && (
             <tr>
-              <td
-                colSpan={4}
-                className='p-3 text-sm text-center font-medium text-gray-400 border-t'
-              >
+              <td colSpan={4} className="p-3 text-center text-slate-400 font-medium">
                 No suppliers found.
               </td>
             </tr>
@@ -85,6 +84,6 @@ export default function SupplierTable({ data }: Props) {
         onOpenChange={setIsEditOpen}
         initialData={selectedSupplier}
       />
-    </div>
+    </>
   );
 }
