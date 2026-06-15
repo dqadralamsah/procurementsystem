@@ -34,7 +34,7 @@ export const itemCategoryService = {
 
 // ========== ITEM SERVICE ==========
 export const itemService = {
-  // GET All Item
+  // GET All Item with pagination & filter
   async getAll(search?: string, page: number = 1, limit: number = 10) {
     const safePage = Math.max(1, page);
     const safeLimit = Math.max(1, Math.min(limit, 100));

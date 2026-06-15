@@ -1,15 +1,40 @@
-import prisma from "@/lib/prisma";
-import { codeGenerator } from "@/utils/codeGenerator";
-import { SupplierValues } from "@/schemas/supplier.schema";
+import prisma from '@/lib/prisma';
+import { codeGenerator } from '@/utils/codeGenerator';
+import { SupplierValues } from '@/schemas/supplier.schema';
+import { getPagination } from '@/utils/pagination';
+import { buildSearchWhere } from '@/utils/search';
 
 export const supplierService = {
   // GET All
-  async getAll() {
-    return await prisma.supplier.findMany({
-      orderBy: {
-        createdAt: "asc",
+  async getAll(search?: string, page: number = 1, limit: number = 10) {
+    const safePage = Math.max(1, page);
+    const safeLimit = Math.max(1, Math.min(limit, 100));
+
+    const { skip, take } = getPagination(safePage, safeLimit);
+
+    const where = buildSearchWhere(search, ["name", "supplierCode"]);
+
+    const [data, total] = await Promise.all([
+      prisma.supplier.findMany({
+        where,
+        skip,
+        take,
+        orderBy: {
+          createdAt: 'desc',
+        },
+      }),
+      prisma.supplier.count({ where }),
+    ]);
+
+    return {
+      data,
+      meta: {
+        page: safePage,
+        total,
+        take,
+        totalPages: Math.ceil(total / take),
       },
-    });
+    };
   },
 
   // GET By ID
@@ -24,11 +49,11 @@ export const supplierService = {
     const lastEntry = await prisma.supplier.findFirst({
       where: {
         supplierCode: {
-          startsWith: "SPPLR-",
+          startsWith: 'SPPLR-',
         },
       },
       orderBy: {
-        supplierCode: "desc",
+        supplierCode: 'desc',
       },
       select: {
         supplierCode: true,
@@ -36,7 +61,7 @@ export const supplierService = {
     });
 
     const supplierCode = codeGenerator({
-      prefix: "SPPLR",
+      prefix: 'SPPLR',
       digits: 3,
       lastEntry: lastEntry?.supplierCode,
     });

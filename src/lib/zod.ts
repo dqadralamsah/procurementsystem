@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+// Auth
 export const SignInZod = z.object({
   email: z.string().min(1, 'Email is required').email('Please enter a valid email address'),
   password: z
@@ -8,5 +9,5 @@ export const SignInZod = z.object({
     .min(6, 'Password must be at least 6 characters'),
 });
 
-// Search & Pagination
+// Search
 export const pageSchema = z.coerce.number().min(1).catch(1);

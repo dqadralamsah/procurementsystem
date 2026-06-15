@@ -82,7 +82,7 @@ const data: { MainMenu: MenuItem[]; SecondMenu: MenuItem[] } = {
   SecondMenu: [
     {
       title: 'Reports',
-      url: '/reports',
+      url: '/reports/purchase-report',
       icon: SquareActivity,
       roleCode: ['ROLE-001'],
       items: [
@@ -92,7 +92,7 @@ const data: { MainMenu: MenuItem[]; SecondMenu: MenuItem[] } = {
     },
     {
       title: 'Settings',
-      url: '/settings',
+      url: '/settings/warehouse',
       icon: Settings,
       roleCode: ['ROLE-001'],
       items: [
