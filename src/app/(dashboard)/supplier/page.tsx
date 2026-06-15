@@ -17,19 +17,24 @@ export default async function Page({
   const res = await supplierService.getAll(search, page, limit);
 
   return (
-    <div className="space-y-6">
+    <div className='space-y-6'>
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Supplier Management</h1>
-        <p className="text-sm text-slate-500 mt-1">Kelola Master Data Supplier</p>
+        <h1 className='text-2xl font-bold text-slate-900'>
+          Supplier Management
+        </h1>
+        <p className='text-sm text-slate-500 mt-1'>
+          Kelola Master Data Supplier
+        </p>
       </div>
 
       {/* Content */}
-      <div className="bg-white border border-slate-200/80 rounded-xl shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 border-b border-slate-100">
+      <div className='p-4 bg-white border border-slate-200/80 rounded-xl shadow-sm space-y-6'>
+        {/* Filter & Create Button */}
+        <div className='flex items-center justify-between gap-4'>
           {/* Search */}
-          <div className="w-full sm:max-w-xs">
-            <SearchComponent placeholder="Cari berdasarkan Nama atau Kode" />
+          <div className='w-full sm:max-w-xs'>
+            <SearchComponent placeholder='Cari Nama atau Supplier Number' />
           </div>
 
           {/* Create Button */}
@@ -38,13 +43,13 @@ export default async function Page({
           </div>
         </div>
 
-        <div className="w-full overflow-x-auto">
+        <div>
           <SupplierTable data={res.data} />
-        </div>
-        
-        {/* Pagination */}
-        <div className="p-4 border-t border-slate-100">
-          <PaginationComponent totalPages={res.meta.totalPages} currentLimit={limit} />
+
+          <PaginationComponent
+            totalPages={res.meta.totalPages}
+            currentLimit={limit}
+          />
         </div>
       </div>
     </div>

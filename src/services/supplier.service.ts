@@ -1,8 +1,9 @@
 import prisma from '@/lib/prisma';
+import { Prisma } from '@/generated/prisma/client';
 import { codeGenerator } from '@/utils/codeGenerator';
 import { SupplierValues } from '@/schemas/supplier.schema';
 import { getPagination } from '@/utils/pagination';
-import { buildSearchWhere } from '@/utils/search';
+import { buildDynamicSearch } from '@/utils/search';
 
 export const supplierService = {
   // GET All
@@ -12,7 +13,7 @@ export const supplierService = {
 
     const { skip, take } = getPagination(safePage, safeLimit);
 
-    const where = buildSearchWhere(search, ["name", "supplierCode"]);
+    const where = buildDynamicSearch(search, ['name', 'supplierCode']);
 
     const [data, total] = await Promise.all([
       prisma.supplier.findMany({

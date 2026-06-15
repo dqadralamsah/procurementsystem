@@ -3,7 +3,7 @@ import { Prisma } from '@/generated/prisma/client';
 import { PaginationResponse } from '@/lib/type';
 import { InventoryType } from '@/types/inventory';
 import { getPagination } from '@/utils/pagination';
-import { buildSearchWhere } from '@/utils/search';
+import { buildDynamicSearch } from '@/utils/search';
 
 // ========== INVENTORY SERVICE ==========
 export const inventoryService = {
@@ -22,7 +22,7 @@ export const inventoryService = {
     const safeLimit = Math.max(1, Math.min(limit, 100));
 
     const { skip, take } = getPagination(safePage, safeLimit);
-    const itemSearch = buildSearchWhere(search, ['name', 'sku']);
+    const itemSearch = buildDynamicSearch(search, ['name', 'sku']);
 
     const where: Prisma.InventoryWhereInput = {
       warehouseId,
