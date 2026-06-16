@@ -2,7 +2,7 @@ import prisma from '@/lib/prisma';
 import { ItemCategoryValue, ItemFormValue } from '@/schemas/item.schema';
 import { codeGenerator } from '@/utils/codeGenerator';
 import { getPagination } from '@/utils/pagination';
-import { buildSearchWhere } from '@/utils/search';
+import { buildDynamicSearch } from '@/utils/search';
 
 // ========== ITEM CATEGORY SERVICE ==========
 export const itemCategoryService = {
@@ -41,7 +41,7 @@ export const itemService = {
 
     const { skip, take } = getPagination(safePage, safeLimit);
 
-    const where = buildSearchWhere(search, ['name', 'sku']);
+    const where = buildDynamicSearch(search, ['name', 'sku']);
 
     const [items, total] = await Promise.all([
       prisma.item.findMany({
@@ -57,14 +57,8 @@ export const itemService = {
       prisma.item.count({ where }),
     ]);
 
-    const serializedItems = items.map((item) => ({
-      ...item,
-      reorderPoint: Number(item.reorderPoint),
-      minimumStock: Number(item.minimumStock),
-    }));
-
     return {
-      data: serializedItems,
+      data: items,
       meta: {
         page,
         total,

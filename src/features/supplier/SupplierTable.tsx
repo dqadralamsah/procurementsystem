@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { SupplierType } from '@/types/supplier';
 import { SquarePen, Eye } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import SupplierForm from './SupplierForm';
 
@@ -35,11 +36,10 @@ export default function SupplierTable({ data }: Props) {
               <td className='p-2'>
                 <div className='flex items-center justify-center'>
                   <span
-                    className={`px-2 py-0.5 rounded-full text-[11px] font-bold border ${
-                      sup.isActive
+                    className={`px-2 py-0.5 rounded-full text-[11px] font-bold border ${sup.isActive
                         ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                         : 'bg-rose-50 text-rose-700 border-rose-200'
-                    }`}
+                      }`}
                   >
                     {sup.isActive ? 'Active' : 'Inactive'}
                   </span>
@@ -47,6 +47,15 @@ export default function SupplierTable({ data }: Props) {
               </td>
               <td className='p-2'>
                 <div className='flex items-center justify-center gap-1.5'>
+                  <Link href={`/supplier/${sup.id}`}>
+                    <Button
+                      variant='ghost'
+                      size='icon'
+                      className='h-8 w-8 text-slate-500 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-colors'
+                    >
+                      <Eye className='size-4' />
+                    </Button>
+                  </Link>
                   <Button
                     onClick={() => {
                       setSelectedSupplier(sup);
@@ -57,13 +66,6 @@ export default function SupplierTable({ data }: Props) {
                     className='h-8 w-8 text-slate-500 hover:text-amber-600 hover:bg-amber-50/50 rounded-lg transition-colors'
                   >
                     <SquarePen className='size-4' />
-                  </Button>
-                  <Button
-                    variant='ghost'
-                    size='icon'
-                    className='h-8 w-8 text-slate-500 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-colors'
-                  >
-                    <Eye className='size-4' />
                   </Button>
                 </div>
               </td>

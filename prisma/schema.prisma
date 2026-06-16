@@ -162,16 +162,13 @@ model SupplierPrices {
   @@map("supplier_prices")
 }
 
-// ==========================================
-// TRANSACTION
-// ==========================================
-
 model Inventory {
   id           String    @id @default(uuid()) @db.Uuid
   warehouseId  String    @map("warehouse_id") @db.Uuid
   warehouse    Warehouse @relation(fields: [warehouseId], references: [id])
   itemId       String    @map("item_id") @db.Uuid
   item         Item      @relation(fields: [itemId], references: [id])
+  stockStatus  String    @default("IN_STOCK") @map("stock_status")
   quantity     Decimal   @default(0) @db.Decimal(18, 4)
   reorderPoint Decimal   @default(0) @map("reorder_point") @db.Decimal(18, 4)
   minimumStock Decimal   @default(0) @map("minimum_stock") @db.Decimal(18, 4)
@@ -180,6 +177,6 @@ model Inventory {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@unique([itemId, warehouseId])
-  @@index([itemId, warehouseId])
+  @@index([itemId, warehouseId, stockStatus])
   @@map("inventory")
 }

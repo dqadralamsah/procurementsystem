@@ -15,8 +15,6 @@ export const itemSchema = z.object({
   description: z.string().optional().nullable(),
   categoryId: z.string().uuid('Select category'),
   uomId: z.string().uuid('Select one'),
-  reorderPoint: z.coerce.number().min(0, 'Minimum 0'),
-  minimumStock: z.coerce.number().min(0, 'Minimum 0'),
   isActive: z.boolean().default(true),
 });
 

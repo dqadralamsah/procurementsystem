@@ -15,7 +15,5 @@ export type ItemType = {
   category: { name: string };
   uomId: string;
   uom: { name: string };
-  reorderPoint: number;
-  minimumStock: number;
   isActive: boolean;
 };

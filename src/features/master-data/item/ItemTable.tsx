@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ItemType, ItemCategoryType } from '@/types/item';
 import { UomType } from '@/types/uom';
 import { SquarePen, Eye } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import ItemForm from './ItemForm';
 
@@ -104,13 +105,15 @@ export default function ItemTable({ data, categories, uoms }: Props) {
                   >
                     <SquarePen className="size-4" />
                   </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 text-slate-500 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-colors"
-                  >
-                    <Eye className="size-4" />
-                  </Button>
+                  <Link href={`/item-catalog/${item.id}`}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-slate-500 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-colors"
+                    >
+                      <Eye className="size-4" />
+                    </Button>
+                  </Link>
                 </div>
               </td>
             </tr>

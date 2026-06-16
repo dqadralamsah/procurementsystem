@@ -33,8 +33,6 @@ export default function ItemForm({ initialData, categories, uoms, isOpen, onOpen
       description: initialData?.description ?? '',
       categoryId: initialData?.categoryId ?? '',
       uomId: initialData?.uomId ?? '',
-      reorderPoint: initialData?.reorderPoint ?? 0,
-      minimumStock: initialData?.minimumStock ?? 0,
       isActive: initialData?.isActive ?? true,
     },
   });
@@ -112,25 +110,7 @@ export default function ItemForm({ initialData, categories, uoms, isOpen, onOpen
             </div>
           </div>
 
-          {/* Stock Parameters */}
-          <div className="grid grid-cols-3 gap-4 border-t pt-4">
-            <div className="space-y-1">
-              <label className="font-medium">Min Stock</label>
-              <input
-                type="number"
-                {...form.register('minimumStock')}
-                className="w-full border rounded p-2"
-              />
-            </div>
-            <div className="space-y-1">
-              <label className="font-medium">Reorder Point</label>
-              <input
-                type="number"
-                {...form.register('reorderPoint')}
-                className="w-full border rounded p-2"
-              />
-            </div>
-          </div>
+
 
           <div className="flex items-center gap-3 py-2 border-t">
             <Controller

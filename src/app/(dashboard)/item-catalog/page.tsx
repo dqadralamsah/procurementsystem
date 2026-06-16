@@ -31,7 +31,7 @@ export default async function Page({
 
       {/* Content */}
       <div className="flex flex-col bg-white border border-slate-200/80 rounded-xl shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5">
           <div className="w-full sm:max-w-xs">
             <SearchComponent placeholder="Cari berdasarkan Nama atau SKU" />
           </div>
