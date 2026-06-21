@@ -9,6 +9,8 @@ import ItemDetailCard from '@/features/master-data/item/ItemDetailCard';
 import ItemSuppliersTable from '@/features/master-data/item/ItemSuppliersTable';
 import SearchComponent from '@/components/shared/Search';
 import PaginationComponent from '@/components/shared/Pagination';
+import { supplierService } from '@/services/supplier.service';
+import SupplierPriceCreateButton from '@/features/supplier/SupplierPriceCreateButton';
 
 export default async function ItemDetailPage({
   params,
@@ -24,11 +26,12 @@ export default async function ItemDetailPage({
   const page = Math.max(1, Number(sp?.page) || 1);
   const limit = Math.max(10, Number(sp?.limit) || 10);
 
-  const [item, suppliersRes, categories, uoms] = await Promise.all([
+  const [item, suppliersRes, categories, uoms, activeSuppliers] = await Promise.all([
     itemService.getById(id),
     supplierPriceService.getByItemId(id, search, page, limit),
     itemCategoryService.getAll(),
     uomService.getAll(),
+    supplierService.getActiveSuppliers(),
   ]);
 
   if (!item) {
@@ -72,8 +75,13 @@ export default async function ItemDetailPage({
             </p>
           </div>
 
-          <div className='w-full sm:max-w-xs'>
+          <div className='w-full sm:max-w-md flex items-center justify-end gap-3'>
             <SearchComponent placeholder='Cari Nama / Kode Supplier' />
+            <SupplierPriceCreateButton 
+              fixedItemId={id} 
+              suppliers={activeSuppliers} 
+              uoms={uoms} 
+            />
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import prisma from '@/lib/prisma';
 import { Prisma } from '@/generated/prisma/client';
 import { getPagination } from '@/utils/pagination';
 import { buildDynamicSearch } from '@/utils/search';
+import { SupplierPriceValue } from '@/schemas/supplierPrice.schema';
 
 export const supplierPriceService = {
   // GET Items by Supplier ID
@@ -101,5 +102,12 @@ export const supplierPriceService = {
         totalPages: Math.ceil(total / take),
       },
     };
+  },
+
+  // CREATE Supplier Price
+  async create(data: SupplierPriceValue) {
+    return await prisma.supplierPrices.create({
+      data,
+    });
   },
 };

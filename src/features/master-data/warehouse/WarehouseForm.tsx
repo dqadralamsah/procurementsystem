@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { WarehouseType } from '@/types/warehouse';
+import { Warehouse } from '@/generated/prisma/client';
 import { warehouseSchema, WarehouseInput } from '@/schemas/warehouse.schema';
 import { handleWarehouseSubmit } from '@/actions/warehouseAction';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -11,36 +10,24 @@ import { Switch } from '@/components/ui/switch';
 import SubmitButton from '@/components/shared/SubmitButton';
 
 type Props = {
-  initialData: WarehouseType | null;
+  initialData: Warehouse | null;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 };
 
 export default function WarehouseForm({ initialData, isOpen, onOpenChange }: Props) {
-  const form = useForm<WarehouseInput>({
+  const form = useForm({
     resolver: zodResolver(warehouseSchema),
-    defaultValues: {
-      name: initialData?.name ?? '',
-      address: initialData?.address ?? '',
-      description: initialData?.description ?? '',
+    defaultValues: initialData || {
+      name: '',
+      address: '',
+      description: '',
       isActive: true,
     },
   });
 
-  useEffect(() => {
-    if (isOpen) {
-      form.reset({
-        name: initialData?.name || '',
-        address: initialData?.address || '',
-        description: initialData?.description || '',
-        isActive: initialData !== null ? initialData.isActive : true,
-      });
-    }
-  }, [isOpen, initialData, form]);
-
   const onSubmit = async (data: WarehouseInput) => {
-    const parsed = warehouseSchema.parse(data);
-    const res = await handleWarehouseSubmit(initialData?.id || null, parsed);
+    const res = await handleWarehouseSubmit(initialData?.id|| null, data);
 
     if (res.success) {
       form.reset();

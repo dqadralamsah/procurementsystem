@@ -9,21 +9,20 @@ export default function WarehouseCreateButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className='flex justify-center gap-2'>
-      <Button
-        onClick={() => setIsOpen(true)}
-        size={'sm'}
-        className=' text-white bg-blue-500 hover:bg-blue-600'
+    <>
+      <Button onClick={() => setIsOpen(true)} className=' flex justify-center gap-2 text-white bg-blue-500 hover:bg-blue-600'
       >
         <Plus strokeWidth={3} data-icon='inline-start' />
         Create
       </Button>
 
-      <WarehouseForm
+      {isOpen && (
+        <WarehouseForm
+        initialData={null}
         isOpen={isOpen}
         onOpenChange={setIsOpen}
-        initialData={null}
       />
-    </div>
+      )}
+    </>
   );
 }

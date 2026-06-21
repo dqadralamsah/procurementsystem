@@ -7,10 +7,6 @@ import { buildDynamicSearch } from '@/utils/search';
 
 // ========== INVENTORY SERVICE ==========
 export const inventoryService = {
-  // GET All
-
-  // GET By ID
-
   // GET Paginated & Filtered Inventories for a Warehouse
   async getByWarehouseId(
     warehouseId: string,

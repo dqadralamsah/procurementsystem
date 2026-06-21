@@ -20,18 +20,14 @@ export default async function Page({
     <div className='space-y-6'>
       {/* Header */}
       <div>
-        <h1 className='text-2xl font-bold text-slate-900'>
-          Supplier Management
-        </h1>
-        <p className='text-sm text-slate-500 mt-1'>
-          Kelola Master Data Supplier
-        </p>
+        <h1 className='text-2xl font-bold text-slate-900'>Supplier Management</h1>
+        <p className='text-sm text-slate-500 mt-1'>Kelola Master Data Supplier</p>
       </div>
 
       {/* Content */}
-      <div className='p-4 bg-white border border-slate-200/80 rounded-xl shadow-sm space-y-6'>
+      <div className='bg-white border border-slate-200/80 rounded-xl shadow-sm'>
         {/* Filter & Create Button */}
-        <div className='flex items-center justify-between gap-4'>
+        <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5'>
           {/* Search */}
           <div className='w-full sm:max-w-xs'>
             <SearchComponent placeholder='Cari Nama atau Supplier Number' />

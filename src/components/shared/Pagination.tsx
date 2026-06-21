@@ -24,6 +24,7 @@ export default function PaginationComponent({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
+
   const currentPage = Number(searchParams.get('page')) || 1;
 
   const createPageURL = (pageNumber: number | string) => {
@@ -45,7 +46,7 @@ export default function PaginationComponent({
   const disabledClass = 'pointer-events-none opacity-50';
 
   return (
-    <div className="mt-4 flex items-center justify-between px-2">
+    <div className="flex items-center justify-between p-4 border-t border-slate-200">
       {/* Rows pages */}
       <div className="flex items-center gap-3 text-sm text-gray-500">
         <p className="font-medium">Rows pages</p>
@@ -64,7 +65,7 @@ export default function PaginationComponent({
       </div>
 
       {/* Pagination */}
-      <Pagination className="mx-0 w-auto justify-end">
+      <Pagination className="w-auto justify-end mx-0">
         <PaginationContent className="gap-1">
           {/* Tombol FIRST (Ke halaman 1) */}
           <PaginationItem>

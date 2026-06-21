@@ -1,3 +1,4 @@
+import { Prisma } from '@/generated/prisma/client';
 import { z } from 'zod';
 
 export const warehouseSchema = z.object({
@@ -11,5 +12,5 @@ export const warehouseSchema = z.object({
   isActive: z.boolean().default(true),
 });
 
-export type WarehouseInput = z.input<typeof warehouseSchema>;
-export type WarehouseValues = z.infer<typeof warehouseSchema>;
+export type WarehouseInput = z.infer<typeof warehouseSchema>;
+export type WarehouseValues = Prisma.WarehouseUncheckedCreateInput;

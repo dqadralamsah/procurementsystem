@@ -12,7 +12,6 @@ export default function SupplierCreateButton() {
     <div className="flex justify-center gap-2">
       <Button
         onClick={() => setIsOpen(true)}
-        size={'sm'}
         className="text-white bg-blue-500 hover:bg-blue-600 transition-all"
       >
         <Plus strokeWidth={3} data-icon="inline-start" />

@@ -45,6 +45,14 @@ export const supplierService = {
     });
   },
 
+  // GET Active Suppliers
+  async getActiveSuppliers() {
+    return await prisma.supplier.findMany({
+      where: { isActive: true },
+      orderBy: { name: 'asc' },
+    });
+  },
+
   // CREATE
   async create(data: SupplierValues) {
     const lastEntry = await prisma.supplier.findFirst({

@@ -1,7 +1,7 @@
 import { itemCategoryService, itemService } from '@/services/item.service';
 import { uomService } from '@/services/uom.service';
-import ItemCreateButton from '@/features/master-data/item/ItemCreateButton';
 import ItemTable from '@/features/master-data/item/ItemTable';
+import ItemCreateButton from '@/features/master-data/item/ItemCreateButton';
 import SearchComponent from '@/components/shared/Search';
 import PaginationComponent from '@/components/shared/Pagination';
 
@@ -30,7 +30,7 @@ export default async function Page({
       </div>
 
       {/* Content */}
-      <div className="flex flex-col bg-white border border-slate-200/80 rounded-xl shadow-sm">
+      <div className="bg-white border border-slate-200/80 rounded-xl shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5">
           <div className="w-full sm:max-w-xs">
             <SearchComponent placeholder="Cari berdasarkan Nama atau SKU" />

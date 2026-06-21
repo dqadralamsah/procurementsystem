@@ -2,6 +2,10 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
+import { ButtonGroup } from '../ui/button-group';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Search } from 'lucide-react';
 
 export default function SearchComponent({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
@@ -22,12 +26,15 @@ export default function SearchComponent({ placeholder }: { placeholder: string }
   }, 300);
 
   return (
-    <input
-      type="text"
-      className="px-3 py-2 w-full max-w-sm text-sm border rounded-md"
-      placeholder={placeholder}
-      onChange={(e) => handleSearch(e.target.value)}
-      defaultValue={searchParams.get('search')?.toString()}
-    />
+    <ButtonGroup>
+      <Button variant='outline' size='icon' className='hover:bg-white'><Search/></Button>
+      <Input
+        type="text"
+        placeholder={placeholder}
+        onChange={(e) => handleSearch(e.target.value)}
+        defaultValue={searchParams.get('search')?.toString()}
+        className='bg-white'
+      />
+    </ButtonGroup>
   );
 }

@@ -44,7 +44,7 @@ export const warehouseService = {
   },
 
   // CREATE
-  async create(data: WarehouseValues) {
+  async create(data: Omit<WarehouseValues, 'warehouseCode'>) {
     const lastEntry = await prisma.warehouse.findFirst({
       where: {
         warehouseCode: {
@@ -71,7 +71,7 @@ export const warehouseService = {
   },
 
   // UPDATE
-  async update(id: string, data: WarehouseValues) {
+  async update(id: string, data: Partial<Omit<WarehouseValues, 'warehouseCode'>>) {
     return await prisma.warehouse.update({
       where: { id },
       data,

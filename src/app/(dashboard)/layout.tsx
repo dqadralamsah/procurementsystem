@@ -3,7 +3,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import AppSidebar from '@/components/layout/sidebar/AppSidebar';
-import DynamicBreadcrumbs, { BreadcrumbProvider } from '@/components/layout/DynemicBreadcrumbs';
+import DynamicBreadcrumbs, { BreadcrumbProvider } from '@/components/shared/DynemicBreadcrumbs';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
@@ -23,7 +23,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
               <DynamicBreadcrumbs />
             </div>
           </header>
-          <main className="w-full max-w-350 h-dvh p-4 mx-auto">{children}</main>
+          <main className="w-full max-w-350 h-full p-4 mx-auto">{children}</main>
         </SidebarInset>
       </SidebarProvider>
     </BreadcrumbProvider>

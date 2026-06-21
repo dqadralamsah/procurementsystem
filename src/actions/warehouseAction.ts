@@ -1,11 +1,11 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { warehouseSchema, WarehouseValues } from '@/schemas/warehouse.schema';
+import { warehouseSchema, WarehouseInput } from '@/schemas/warehouse.schema';
 import { warehouseService } from '@/services/warehouse.service';
 
 // Handle Submit
-export async function handleWarehouseSubmit(id: string | null, data: WarehouseValues) {
+export async function handleWarehouseSubmit(id: string | null, data: WarehouseInput) {
   try {
     const validated = warehouseSchema.parse(data);
 
