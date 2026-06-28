@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
-import { Warehouse } from '@/generated/prisma/client';
-import { SquarePen, Eye } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import WarehouseForm from './WarehouseForm';
+import Link from "next/link";
+import { useState } from "react";
+import { Warehouse } from "@/generated/prisma/client";
+import { SquarePen, Eye } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import WarehouseForm from "./WarehouseForm";
 
-export default function WarehouseTable({ data }: {data: Warehouse[]}) {
+export default function WarehouseTable({ data }: { data: Warehouse[] }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectWarehouse, setSelectWarehouse] = useState<Warehouse | null>(
     null,
@@ -15,9 +15,9 @@ export default function WarehouseTable({ data }: {data: Warehouse[]}) {
 
   return (
     <>
-      <table className='w-full min-w-[700px] border-collapse text-left'>
+      <table className='w-full min-w-175 text-left'>
         <thead>
-          <tr className='bg-slate-50/75 border-b border-slate-200/80 text-xs font-semibold text-slate-500 uppercase tracking-wider'>
+          <tr className='text-[10px] font-semibold uppercase bg-slate-100/80 border-b border-slate-200/80'>
             <th className='w-60 p-3'>Warehouse Code</th>
             <th className='p-3'>Name & Details</th>
             <th className='w-36 p-3 text-center'>Status</th>
@@ -44,11 +44,11 @@ export default function WarehouseTable({ data }: {data: Warehouse[]}) {
                 <span
                   className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border ${
                     wh.isActive
-                      ? 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-950/20 dark:border-emerald-800/30 dark:text-emerald-400'
-                      : 'bg-rose-50 border-rose-200 text-rose-700 dark:bg-rose-950/20 dark:border-rose-800/30 dark:text-rose-400'
+                      ? "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-950/20 dark:border-emerald-800/30 dark:text-emerald-400"
+                      : "bg-rose-50 border-rose-200 text-rose-700 dark:bg-rose-950/20 dark:border-rose-800/30 dark:text-rose-400"
                   }`}
                 >
-                  {wh.isActive ? 'Active' : 'Inactive'}
+                  {wh.isActive ? "Active" : "Inactive"}
                 </span>
               </td>
               <td className='p-3'>

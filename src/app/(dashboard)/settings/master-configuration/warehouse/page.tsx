@@ -1,19 +1,26 @@
-import { WarehouseList } from "@/features/master-data/warehouse/components/warehouse-list";
+import { warehouseService } from "@/services/warehouse.service";
+import WarehouseTable from "@/features/master-data/warehouse/WarehouseTable";
+import WarehouseCreateButton from "@/features/master-data/warehouse/WarehouseCreateButton";
 
-export const metadata = {
-  title: "Warehouse Configuration",
-};
+export default async function WarehousePage() {
+  const data = await warehouseService.getAll();
 
-export default function WarehousePage() {
   return (
-    <div className="space-y-4">
+    <div className='space-y-4'>
       <div>
-        <h3 className="text-lg font-medium">Warehouse Configuration</h3>
-        <p className="text-sm text-muted-foreground">
+        <h1 className='text-2xl font-bold'>Warehouse Configuration</h1>
+        <p className='text-sm text-muted-foreground'>
           Manage your warehouse locations and details.
         </p>
       </div>
-      <WarehouseList />
+      <div className='bg-card border border-gray-200/80 rounded-lg shadow-md'>
+        <div className='p-4'>
+          <WarehouseCreateButton />
+        </div>
+        <div className='p-2'>
+          <WarehouseTable data={data} />
+        </div>
+      </div>
     </div>
   );
 }

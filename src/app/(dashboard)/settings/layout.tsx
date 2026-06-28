@@ -6,12 +6,10 @@ export default function SettingsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className='flex gap-2'>
-      <div className='w-72 h-screen p-4 border border-gray-200/80 bg-white rounded-lg shadow-md'>
-        <SettingAside />
-      </div>
+    <div className='flex gap-4'>
+      <SettingAside />
 
-      <main className=''>{children}</main>
+      <main className='w-full'>{children}</main>
     </div>
   );
 }
